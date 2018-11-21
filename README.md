@@ -1,4 +1,4 @@
-# ArmyCall_TelegramBot
+# ArmyCall Telegram Bot
 
 Selects random user from chat to call to army
 
