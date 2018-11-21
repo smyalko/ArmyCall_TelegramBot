@@ -17,6 +17,7 @@ function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
+
 //React on command /new_sesiya@rv_voenkom_bot, and create new state for specific chat
 bot.onText(/\/new_sesiya@rv_voenkom_bot/, (msg, match) => {
     chats[msg.chat.id] = new Array(0);
@@ -26,9 +27,9 @@ bot.onText(/\/new_sesiya@rv_voenkom_bot/, (msg, match) => {
 //React on command /new_sesiya@rv_voenkom_bot, and add user to chat state
 bot.onText(/\/want_povistka@rv_voenkom_bot/, (msg, match) => {
 
-    if(msg.from.username == "unfedined"){
-        bot.sendMessage(msg.chat.id, msg.from.first_name + ", встанови @юзернейм");       
-        return; 
+    if (msg.from.username == "unfedined") {
+        bot.sendMessage(msg.chat.id, msg.from.first_name + ", встанови @юзернейм");
+        return;
     }
 
     if (typeof chats[msg.chat.id] == 'undefined') {
@@ -60,7 +61,12 @@ bot.onText(/\/prizyv@rv_voenkom_bot/, (msg, match) => {
 
 //React on command /new_sesiya@rv_voenkom_bot, and get random user from chat to send "povistka"
 bot.onText(/\/povistka@rv_voenkom_bot/, (msg, match) => {
-    var soldier_user = users[getRndInteger(0, users.length)];
-    bot.sendMessage(msg.chat.id, "І так.. осінній призив..");
-    bot.sendMessage(msg.chat.id, "@" + soldier_user + ", відкрийте, вам повістка");
+    try {
+        var chat = chats[msg.chat.id];
+        var soldier_user = chat[getRndInteger(0, chats.length)];
+        bot.sendMessage(msg.chat.id, "І так.. осінній призив..");
+        bot.sendMessage(msg.chat.id, "@" + soldier_user + ", відкрийте, двері, вам повістка");
+    } catch (exception) {
+        console.log(exception);
+    }
 });
